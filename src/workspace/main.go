@@ -27,6 +27,7 @@ func ExecuteCmd(commands string, list []string) Responce {
 	return Responce{outStr, errStr}
 }
 func handleError(commands string, output string, err string) {
+	defer rec()
 	fmt.Printf("cmd %v output %v err %v", commands, output, err)
 }
 func main() { //git status
@@ -41,5 +42,11 @@ func main() { //git status
 		pushErr := ExecuteCmd("git", []string{"push"})
 		handleError("Commit", pushErr.Output, pushErr.Err)
 
+	}
+}
+func rec() {
+
+	if r := recover(); r != nil {
+		fmt.Println("Recovered in f", r)
 	}
 }
