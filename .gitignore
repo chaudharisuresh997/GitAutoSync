@@ -1,0 +1,17 @@
+src/*
+!src/workspace
+!.envrc
+!launch.json
+src/github.com/*
+src/golang.org/*
+src/google.golang.org/*
+bin/
+pkg/
+.vscode/
+*.txt
+ src/golang.org/
+debug.test
+msg
+*.tar.gz
+.project
+src/golang.org/x/sys
