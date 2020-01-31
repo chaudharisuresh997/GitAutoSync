@@ -20,19 +20,26 @@ func ExecuteCmd(commands string, list []string) Responce {
 	cmd.Stderr = &stderr
 	err := cmd.Run()
 	if err != nil {
-		log.Fatalf("cmd.Run() X failed with %s\n", err)
+		log.Fatalf("cmd.Run() X rfailed with %s\n", err)
 	}
 	outStr, errStr := string(stdout.Bytes()), string(stderr.Bytes())
 	fmt.Printf("out:\n%s\nerr:\n%s\n", outStr, errStr)
 	return Responce{outStr, errStr}
 }
+func handleError(commands string, output string, err string) {
+	fmt.Printf("cmd %v output %v err %v", commands, output, err)
+}
 func main() { //git status
 	t := time.Duration(10 * time.Millisecond)
 	for x := range time.Tick(t) {
 		fmt.Printf("ticker %v", x)
-		_ = ExecuteCmd("git", []string{"add", "."})
+		addres := ExecuteCmd("git", []string{"add", "."})
+		handleError("add", addres.Output, addres.Err)
 		//message will come from some file.
-		_ = ExecuteCmd("git", []string{"commit", "-m", "Automated commit "})
-		_ = ExecuteCmd("git", []string{"push"})
+		commitRes := ExecuteCmd("git", []string{"commit", "-m", "Automated commit "})
+		handleError("Commit", commitRes.Output, commitRes.Err)
+		pushErr := ExecuteCmd("git", []string{"push"})
+		handleError("Commit", pushErr.Output, pushErr.Err)
+
 	}
 }
