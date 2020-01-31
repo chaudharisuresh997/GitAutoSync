@@ -28,7 +28,7 @@ func ExecuteCmd(commands string, list []string) Responce {
 }
 func handleError(commands string, output string, err string) {
 	defer rec()
-	fmt.Printf("cmd %v output %v err %v", commands, output, err)
+	fmt.Printf("cmd %v outcput %v err %v", commands, output, err)
 }
 func main() { //git status
 	t := time.Duration(10 * time.Millisecond)
