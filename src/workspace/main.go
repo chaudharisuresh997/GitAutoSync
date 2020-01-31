@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os/exec"
+	"time"
 )
 
 type Responce struct {
@@ -26,9 +27,12 @@ func ExecuteCmd(commands string, list []string) Responce {
 	return Responce{outStr, errStr}
 }
 func main() { //git status
-	_ = ExecuteCmd("git", []string{"add", "."})
-	//message will come from some file.
-	_ = ExecuteCmd("git", []string{"commit", "-m", "Automated commit "})
-	_ = ExecuteCmd("git", []string{"push"})
-
+	t := time.Duration(10 * time.Millisecond)
+	for x := range time.Tick(t) {
+		fmt.Printf("ticker %v", x)
+		_ = ExecuteCmd("git", []string{"add", "."})
+		//message will come from some file.
+		_ = ExecuteCmd("git", []string{"commit", "-m", "Automated commit "})
+		_ = ExecuteCmd("git", []string{"push"})
+	}
 }
